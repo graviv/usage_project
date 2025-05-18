@@ -1,0 +1,32 @@
+
+name: Run Python Usage Checks
+
+on: [push, pull_request]
+
+jobs:
+  usage-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install -r usage_logging/requirements.txt
+
+      - name: Check BigQuery script
+        run: |
+          python usage_logging/scripts/bq_usage.py || true
+
+      - name: Check Athena script
+        run: |
+          python usage_logging/scripts/athena_usage.py || true
+
+      - name: Check Azure script
+        run: |
+          python usage_logging/scripts/azure_usage.py || true

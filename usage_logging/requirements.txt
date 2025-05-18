@@ -1,0 +1,5 @@
+google-cloud-bigquery
+boto3
+azure-identity
+azure-monitor-query
+pandas
